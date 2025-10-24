@@ -43,7 +43,7 @@ The path will look similar to `/path/to/game/BepInEx/config/StreamSideResearch.c
 
 The full configuration file should look similar to the following:
 
-```toml
+```
 ## Settings file was created by plugin StreamSideResearch v1.0.0
 ## Plugin GUID: StreamSideResearch
 
