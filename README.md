@@ -41,6 +41,74 @@ The path will look similar to `/path/to/game/BepInEx/config/StreamSideResearch.c
 
 ![Steam Game Location](./images/find-config-location.png)
 
+The full configuration file should look similar to the following:
+
+```toml
+## Settings file was created by plugin StreamSideResearch v1.0.0
+## Plugin GUID: StreamSideResearch
+
+[General]
+
+## If true, can use hotkeys to cheat for debugging/testing mod implementation.
+# Setting type: Boolean
+# Default value: false
+Enable Cheats = false
+
+[Over Head UI]
+
+## Defines the vertical offset text should appear above an NPC's head.
+# Setting type: Single
+# Default value: 0.4
+Height Offset = 0.4
+
+## Defines the text size above an NPC's head.
+# Setting type: Single
+# Default value: 24
+Text Font Size = 24
+
+## Defines the text outline width above an NPC's head.
+# Setting type: Single
+# Default value: 0.8
+Text Outline Width = 0.8
+
+[Twitch Integration]
+
+## A comma-separated list of chatter usernames whose message will not process.
+# Setting type: String
+# Default value: 
+Blocklisted Chatters = 
+
+## The Twitch channel to listen for messages in.
+# Setting type: String
+# Default value: ReservedKeyword
+Channel Name = ReservedKeyword
+
+## A unique chat command, like !agent, that registers a chatter's intent to be an in-game agent.
+# Setting type: String
+# Default value: !agent
+Message (Agent) Command = !agent
+
+## A unique chat command, like !customer, that registers a chatter's intent to be an in-game customer.
+# Setting type: String
+# Default value: !customer
+Message (Customer) Command = !customer
+
+## If true, an NPC that spawns that has no chatters with a preference toward their body type will not have a name attached.
+# Setting type: Boolean
+# Default value: false
+Strict Body Preference = true
+
+## A weight (higher than 1.0) that makes subscribers more likely to be chosen. (For example, 1.2 means subscribers are 20% more likely to be chosen.)
+# Setting type: Double
+# Default value: 1.2
+Subscriber Weight = 1.2
+
+## The limit of combined, **unique** chatters to keep in the queue. Any chatters above this limit will not be added!
+# Setting type: Int32
+# Default value: 200
+Queue Size = 200
+```
+
 ## Questions?
 
 If you have any questions, feel free to put them in [GitHub Issues](https://github.com/ReservedKeyword/StreamSideResearch/issues) or by email at [contact@reservedkeyword.com](mailto:contact@reservedkeyword.com)
