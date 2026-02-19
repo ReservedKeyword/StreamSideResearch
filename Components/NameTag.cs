@@ -1,17 +1,17 @@
-using BepInEx.Logging;
-using TMPro;
+using Il2CppTMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using Vector3 = UnityEngine.Vector3;
 
-namespace StreamSideResearch.UI
+namespace StreamSideResearch.Components
 {
-    public class NPCNameTag : MonoBehaviour
+    public class NameTag(System.IntPtr ptr) : MonoBehaviour(ptr)
     {
-        private static readonly Plugin plugin = Plugin.Instance;
-        private static readonly PluginConfig config = plugin.PluginConfig;
-        private static readonly ManualLogSource logger = plugin.Logger;
+        private static readonly Mod mod = Mod.Instance;
+        private static readonly ModConfig modConfig = mod.ModConfig;
 
-        public string ChatterName { get; set; }
+        public Color Color { get; set; }
+        public string DisplayName { get; set; }
 
         private Transform headBone;
         private GameObject nameTagObject;
@@ -19,20 +19,13 @@ namespace StreamSideResearch.UI
 
         public void Start()
         {
-            if (string.IsNullOrEmpty(ChatterName))
-            {
-                // This is here as a failsafe, but it should never get called. This component
-                // _should_ not get added if there is no viewer name to assign to it.
-                ChatterName = "Viewer";
-            }
-
             CreateNameTag();
             FindHeadBone();
         }
 
         private void CreateNameTag()
         {
-            nameTagObject = new GameObject("NameTag");
+            nameTagObject = new($"NameTag_{DisplayName}");
 
             var canvas = nameTagObject.AddComponent<Canvas>();
             canvas.renderMode = RenderMode.WorldSpace;
@@ -43,17 +36,18 @@ namespace StreamSideResearch.UI
             textObject.transform.localScale = Vector3.one;
 
             var textRect = textObject.AddComponent<RectTransform>();
-            textRect.sizeDelta = new Vector2(200, 50);
+            textRect.sizeDelta = new(200, 500);
 
             var text = textObject.AddComponent<TextMeshProUGUI>();
             text.alignment = TextAlignmentOptions.Center;
-            text.color = Color.white;
-            text.fontSize = config.TextFontSize.Value;
+            text.color = modConfig.UseTwitchColors ? Color : Color.white;
+            text.fontSize = modConfig.TextFontSize;
+            text.fontStyle = FontStyles.Bold;
             text.outlineColor = Color.black;
-            text.outlineWidth = config.TextOutlineWidth.Value;
-            text.text = ChatterName;
+            text.outlineWidth = modConfig.TextOutlineWidth;
+            text.text = DisplayName;
 
-            nameTagObject.transform.localScale = Vector3.one * 0.005f;
+            nameTagObject.transform.localScale = Vector3.one * .005f;
         }
 
         private void FindHeadBone()
@@ -63,7 +57,6 @@ namespace StreamSideResearch.UI
             if (animator != null)
             {
                 headBone = animator.GetBoneTransform(HumanBodyBones.Head);
-                logger.LogInfo($"Setting head bone for NPC to: {headBone}");
             }
         }
 
@@ -87,7 +80,7 @@ namespace StreamSideResearch.UI
                     npcPosition = transform.position;
                 }
 
-                var heightOffset = config.HeightOffset.Value;
+                var heightOffset = modConfig.HeighOffset;
 
                 if (headBone != null)
                 {
@@ -98,9 +91,11 @@ namespace StreamSideResearch.UI
                     nameTagObject.transform.position = npcPosition + Vector3.up * heightOffset;
                 }
 
-                if (Camera.main != null)
+                var mainCamera = Camera.main;
+
+                if (mainCamera != null)
                 {
-                    nameTagObject.transform.rotation = Camera.main.transform.rotation;
+                    nameTagObject.transform.rotation = mainCamera.transform.rotation;
                 }
             }
         }

@@ -1,30 +1,30 @@
-using BepInEx.Logging;
-using NPC;
+using Il2CppNPC;
+using Il2CppSystem.Collections.Generic;
+using MelonLoader;
 using UnityEngine;
 
 namespace StreamSideResearch
 {
-    public class DebugCheats(ManualLogSource logger)
+    internal class DebugCheats(MelonLogger.Instance logger)
     {
-        public void SpawnAgent()
+        public void Spawn(NPCType npcType)
         {
-            var npcManager = Object.FindFirstObjectByType<NPCManager>();
+            var npcManager = Object.FindObjectOfType<NPCManager>();
 
             if (npcManager != null)
             {
-                npcManager.SpawnNPC(NPCType.Agent, NPCBodyType.Random);
-                logger.LogInfo($"Invoked SpawnNPC on Agent!");
-            }
-        }
+                var preSpawnedList = new List<StateMachine>();
+                var networkObject = npcManager.PreSpawnNPC(preSpawnedList, npcType, NPCBodyType.Random);
 
-        public void SpawnCustomer()
-        {
-            var npcManager = Object.FindFirstObjectByType<NPCManager>();
-
-            if (npcManager != null)
-            {
-                npcManager.SpawnNPC(NPCType.Customer, NPCBodyType.Random);
-                logger.LogInfo($"Invoked SpawnNPC on Customer!");
+                if (networkObject != null)
+                {
+                    npcManager.SpawnNPC(preSpawnedList);
+                    logger.Msg($"Spawned {npcType} in the world!");
+                }
+                else
+                {
+                    logger.Warning($"PreSpawnNPC returned null for {npcType}");
+                }
             }
         }
     }

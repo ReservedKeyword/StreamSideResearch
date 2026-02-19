@@ -1,49 +1,40 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    <Import Project="GamePath.props" Condition="Exists('GamePath.props')"></Import>
+    <Import Project="GamePath.props" Condition="Exists('GamePath.props')" />
     <PropertyGroup>
-        <TargetFramework>netstandard2.1</TargetFramework>
-        <AssemblyName>StreamSideResearch</AssemblyName>
-        <RootNamespace>StreamSideResearch</RootNamespace>
-        <AssemblyVersion>1.0.0</AssemblyVersion>
-        <TargetName>$(AssemblyName)-$(AssemblyVersion)</TargetName>
-        <LangVersion>latest</LangVersion>
-        <IsPackable>false</IsPackable>
-        <NeutralLanguage>en-US</NeutralLanguage>
-        <LangVersion>latest</LangVersion>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <AssemblyName>StreamSideResearch</AssemblyName>
+        <AssemblyVersion>1.0.0</AssemblyVersion>
         <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+        <!-- <DefineConstants>IN_TEST_MODE</DefineConstants> -->
+        <IsPackable>false</IsPackable>
+        <LangVersion>latest</LangVersion>
+        <NeutralLanguage>en-US</NeutralLanguage>
         <PlatformTarget>x64</PlatformTarget>
-        <RestoreAdditionalProjectSources>
-            https://api.nuget.org/v3/index.json;
-            https://nuget.bepinex.dev/v3/index.json;
-            https://nuget.samboy.dev/v3/index.json
-        </RestoreAdditionalProjectSources>
+        <RootNamespace>StreamSideResearch</RootNamespace>
+        <TargetFramework>net6.0</TargetFramework>
+        <TargetName>$(AssemblyName)-$(AssemblyVersion)</TargetName>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
-        <PackageReference Include="BepInEx.Core" Version="5.*" />
-        <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
+        <Reference Include="$(MelonLoaderDir)\net6\0Harmony.dll" Private="false" />
+        <Reference Include="$(MelonLoaderDir)\net6\MelonLoader.dll" Private="false" />
+        <Reference Include="$(MelonLoaderDir)\net6\Il2CppInterop.Runtime.dll" Private="false" />
+        <Reference Include="$(Il2CppDir)\Assembly-CSharp.dll" Private="false" />
+        <Reference Include="$(Il2CppDir)\Il2CppFusion.Runtime.dll" Private="false" />
+        <Reference Include="$(Il2CppDir)\Il2Cppmscorlib.dll" Private="false" />
+        <Reference Include="$(Il2CppDir)\Il2CppWallyBox.dll" Private="false" />
+        <Reference Include="$(Il2CppDir)\Unity.TextMeshPro.dll" Private="false" />
+        <Reference Include="$(Il2CppDir)\UnityEngine.AIModule.dll" Private="false" />
+        <Reference Include="$(Il2CppDir)\UnityEngine.AnimationModule.dll" Private="false" />
+        <Reference Include="$(Il2CppDir)\UnityEngine.CoreModule.dll" Private="false" />
+        <Reference Include="$(Il2CppDir)\UnityEngine.InputLegacyModule.dll" Private="false" />
+        <Reference Include="$(Il2CppDir)\UnityEngine.UI.dll" Private="false" />
+        <Reference Include="$(Il2CppDir)\UnityEngine.UIModule.dll" Private="false" />
+        <PackageReference Include="Costura.Fody" Version="6.0.0">
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
         <PackageReference Include="TwitchLib" Version="3.5.3" Private="false" />
-        <Reference Include="$(ManagedDataDir)\Assembly-CSharp.dll" Private="false" />
-        <Reference Include="$(ManagedDataDir)\Fusion.Runtime.dll" Private="false" />
-        <Reference Include="$(ManagedDataDir)\UnityEngine.dll" Private="false" />
-        <Reference Include="$(ManagedDataDir)\UnityEngine.AIModule.dll" Private="false" />
-        <Reference Include="$(ManagedDataDir)\UnityEngine.AnimationModule.dll" Private="false" />
-        <Reference Include="$(ManagedDataDir)\UnityEngine.CoreModule.dll" Private="false" />
-        <Reference Include="$(ManagedDataDir)\UnityEngine.InputModule.dll" Private="false" />
-        <Reference Include="$(ManagedDataDir)\UnityEngine.InputLegacyModule.dll" Private="false" />
-        <Reference Include="$(ManagedDataDir)\UnityEngine.UI.dll" Private="false" />
-        <Reference Include="$(ManagedDataDir)\UnityEngine.UIModule.dll" Private="false" />
-        <Reference Include="$(ManagedDataDir)\Unity.TextMeshPro.dll" Private="false" />
-        <Reference Include="$(ManagedDataDir)\Wallybox.dll" Private="false" />
-    </ItemGroup>
-    <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
-        <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
     </ItemGroup>
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-        <Exec Command="COPY &quot;$(TargetPath)&quot; &quot;$(PluginsDir)&quot;" />
-        <Exec Command="COPY &quot;$(TargetDir)\Microsoft.Extensions.Logging.Abstractions.dll&quot; &quot;$(PluginsDir)&quot;" />
-        <Exec Command="COPY &quot;$(TargetDir)\TwitchLib.Client*.dll&quot; &quot;$(PluginsDir)&quot;" />
-        <Exec Command="COPY &quot;$(TargetDir)\TwitchLib.Communication.dll&quot; &quot;$(PluginsDir)&quot;" />
+        <Exec Command="COPY &quot;$(TargetPath)&quot; &quot;$(BaseGameDir)\Mods&quot;" />
     </Target>
 </Project>
