@@ -9,6 +9,18 @@ Its primary focus is on Twitch streamers who wish to add an element of interacti
 * [Prerequisites](#prerequisites)
 * [Getting Started](#getting-started)
 * [Configuration](#configuration)
+  * [Twitch](#twitch)
+    * [Blocklisted Chatters](#blocklistedchatters)
+    * [Channel Name](#channelname)
+    * [Message Agent Command](#messageagentcommand)
+    * [Message Customer Command](#messagecustomercommand)
+    * [Strict Body Preference](#strictbodypreference)
+    * [Queue Size](#queuesize)
+  * [UI](#ui)
+    * [Height Offset](#heightoffset)
+    * [Text Font Size](#textfontsize)
+    * [Text Outline Width](#textoutlinewidth)
+    * [Use Twitch Colors](#usetwitchcolors)
 * [Questions?](#questions)
 
 ## Prerequisites
