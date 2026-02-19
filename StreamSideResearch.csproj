@@ -3,7 +3,7 @@
     <PropertyGroup>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <AssemblyName>StreamSideResearch</AssemblyName>
-        <AssemblyVersion>1.0.0</AssemblyVersion>
+        <AssemblyVersion>2.0.0</AssemblyVersion>
         <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
         <!-- <DefineConstants>IN_TEST_MODE</DefineConstants> -->
         <IsPackable>false</IsPackable>

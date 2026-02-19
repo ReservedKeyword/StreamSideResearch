@@ -10,7 +10,7 @@ using UnityEngine;
 [assembly: HarmonyDontPatchAll]
 [assembly: MelonColor(1, 160, 32, 240)]
 [assembly: MelonGame("CyberneticWalrus", "Roadside Research")]
-[assembly: MelonInfo(typeof(StreamSideResearch.Mod), "StreamSideResearch", "1.0.0", "ReservedKeyword")]
+[assembly: MelonInfo(typeof(StreamSideResearch.Mod), "StreamSideResearch", "2.0.0", "ReservedKeyword")]
 
 namespace StreamSideResearch
 {
