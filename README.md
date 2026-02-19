@@ -102,7 +102,7 @@ In contrast, if this value is set to `false` and an NPC spawns in the game, the 
 
 It's important to note that regardless of this value, agents and customers are ALWAYS in split pools. If a chatter expresses interest in being an agent, if no customers can be applied, the mod will never choose an agent. This value only affects body type preference.
 
-### `QueueSize`
+#### `QueueSize`
 
 The upper-amount of chatters that are allowed to be in the queue at any given time.
 
