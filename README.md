@@ -73,14 +73,14 @@ The command that is used in Twitch chat to express chatter intent to be an in-ga
 Assuming that `MessageAgentCommand` is equal to `!agent`,
 
 ```
-# Will be any in-game agent
+# Will be any agent
 !agent
 
-# Will be an in-game female agent
+# Will be an female agent
 !agent f
 !agent female
 
-# Will be an in-game male agent
+# Will be an male agent
 !agent m
 !agent male
 ```
