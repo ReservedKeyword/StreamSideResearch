@@ -36,33 +36,95 @@ The configuration file can be found in your game's `UserData` directory, with th
 
 The path will look similar to `/path/to/game/UserData/StreamSideResearch.cfg`, where `/path/to/game` is the path to the Roadside Research game directory. (See image above on how to locate where the game was downloaded.)
 
-The full configuration file should look similar to the following:
+The following configuration options are available:
+
+### Twitch
+
+#### `BlocklistedChatters`
+
+A comma-separated, trimmed list of chatter(s) who should be ignored. This option is often used for bots, such as Fossabot, StreamElements, etc.
+
+An example of multiple users would be as follows:
 
 ```toml
-[Twitch]
-# Comma-separated list of chatters whose messages are not processed
-BlocklistedChatters = "Fossabot,StreamElements"
-# Twitch channel to listen for messages in
-ChannelName = "ReservedKeyword"
-# Chat command to register chatter's intent to be an agent in game
-MessageAgentCommand = "!agent"
-# Chat command to register chatter's intent to be a customer in game
-MessageCustomerCommand = "!customer"
-# If true, an NPC that spawns without chatters in queue with a preference toward their body type will not have a name attached
-StrictBodyPreference = false
-# Maximum number of unique chatters in queue
-QueueSize = 200
-
-[UI]
-# Vertical offset text appears above NPC's head
-HeightOffset = 0.38
-# Font size of text shown above NPC's head
-TextFontSize = 20.0
-# Outline width of text shown above NPC's head
-TextOutlineWidth = 0.8
-# If true, name tags will use same color as chatter in Twitch
-UseTwitchColors = false
+BlocklistedChatters = "Fossabot,StreamElements,Streamlabs"
 ```
+
+#### `ChannelName`
+
+The Twitch channel to join and listen for commands in.
+
+#### `MessageAgentCommand`
+
+The command that is used in Twitch chat to express chatter intent to be an in-game agent. This command, like `MessageCustomerCommand`, can also include an additional preference, such as `f` or `female` for female and `m` or `male` for male.
+
+Assuming that `MessageAgentCommand` is equal to `!agent`,
+
+```
+# Will be any in-game agent
+!agent
+
+# Will be an in-game female agent
+!agent f
+!agent female
+
+# Will be an in-game male agent
+!agent m
+!agent male
+```
+
+#### `MessageCustomerCommand`
+
+The command that is used in Twitch chat to express chatter intent to be an in-game customer. This command, like `MessageAgentCommand`, can also include an additional preference, such as `f` or `female` for female and `m` or `male` for male.
+
+Assuming that `MessageCustomerCommand` is equal to `!customer`,
+
+```
+# Will be any customer
+!customer
+
+# Will be a female customer
+!customer f
+!customer female
+
+# Will be a male customer
+!customer m
+!customer male
+```
+
+#### `StrictBodyPreference`
+
+A boolean value (`true`/`false`) that will specify how the mod behaves when the queue is exhausted.
+
+If this value is set to `true` and an NPC spawns in the game, the mod will **only** fetch chatters who specified the body type preference that is spawning (or chatters who did not specify any body type). If no chatters with the same body type preference as the NPC are found, the mod will NOT generate and apply a name tag to the NPC.
+
+In contrast, if this value is set to `false` and an NPC spawns in the game, the mod will attempt to find a chatter with the same body type preference as the NPC. *However*, unlike if this value is set to `true`, if a chatter with the specified body type preference is not found, then the mod, instead of failing, will fall back to any chatter that has expressed interest in the NPC type, regardless of their body type preference, as specified.
+
+It's important to note that regardless of this value, agents and customers are ALWAYS in split pools. If a chatter expresses interest in being an agent, if no customers can be applied, the mod will never choose an agent. This value only affects body type preference.
+
+### `QueueSize`
+
+The upper-amount of chatters that are allowed to be in the queue at any given time.
+
+This value is, as mentioned previously, the upper limit. It will fluctuate as agents and customers spawn in the game and chatters are popped from the queue.
+
+### UI
+
+#### `HeightOffset`
+
+The vertical offset above an NPC's head that the name tag text will appear.
+
+#### `TextFontSize`
+
+The font size of the text that will appear above an NPC's head.
+
+#### `TextOutlineWidth`
+
+The outline width of the text that will appear above an NPC's head.
+
+#### `UseTwitchColors`
+
+If `true`, the color of the text that will appear above an NPC's head will match the color of the chatter in Twitch, if they have one specified. If the chatter does not have a specified color, or if this value is set to `false`, the color of the text will be white.
 
 ## Questions?
 
