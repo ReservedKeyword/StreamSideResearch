@@ -1,3 +1,11 @@
 ﻿<Weavers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="FodyWeavers.xsd">
-  <Costura />
+    <Costura>
+        <IncludeAssemblies>
+            TwitchLib.Client
+            TwitchLib.Client.Enums
+            TwitchLib.Client.Models
+            TwitchLib.Communication
+            Microsoft.Extensions.Logging.Abstractions
+        </IncludeAssemblies>
+    </Costura>
 </Weavers>
