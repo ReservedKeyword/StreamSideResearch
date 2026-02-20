@@ -62,14 +62,14 @@ namespace StreamSideResearch.Patches
             var actualBodyType = DetermineBodyType(__result.gameObject);
             logger.Msg($"Determined NPC body type as: {actualBodyType}");
 
-            var bodyPreference = actualBodyType switch
+            var appearancePreference = actualBodyType switch
             {
-                NPCBodyType.Female => ChatterManager.BodyPreference.Female,
-                NPCBodyType.Male => ChatterManager.BodyPreference.Male,
-                _ => ChatterManager.BodyPreference.Any,
+                NPCBodyType.Female => ChatterManager.AppearancePreference.Female,
+                NPCBodyType.Male => ChatterManager.AppearancePreference.Male,
+                _ => ChatterManager.AppearancePreference.Any,
             };
 
-            var selectedChatter = chatterManager.GetRandomChatter(npcType, bodyPreference);
+            var selectedChatter = chatterManager.GetRandomChatter(npcType, appearancePreference);
 
             if (selectedChatter == null)
             {

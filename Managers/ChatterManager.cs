@@ -11,7 +11,7 @@ namespace StreamSideResearch.Managers
 {
     public class ChatterManager(Mod mod, ModConfig modConfig)
     {
-        public enum BodyPreference
+        public enum AppearancePreference
         {
             Any,
             Female,
@@ -27,7 +27,7 @@ namespace StreamSideResearch.Managers
 
         public class Participant
         {
-            public BodyPreference BodyPreference { get; set; }
+            public AppearancePreference AppearancePreference { get; set; }
             public UnityEngine.Color Color { get; set; }
             public string DisplayName { get; set; }
             public NPCType NPCType { get; set; }
@@ -72,7 +72,10 @@ namespace StreamSideResearch.Managers
 #endif
         }
 
-        public Participant GetRandomChatter(NPCType npcType, BodyPreference bodyPreference = BodyPreference.Any)
+        public Participant GetRandomChatter(
+            NPCType npcType,
+            AppearancePreference appearancePreference = AppearancePreference.Any
+        )
         {
             lock (chatterLock)
             {
@@ -93,9 +96,9 @@ namespace StreamSideResearch.Managers
                     .. participants
                         .Where(participant => participant.NPCType == npcType)
                         .Where(participant =>
-                            bodyPreference == BodyPreference.Any
-                            || participant.BodyPreference == bodyPreference
-                            || participant.BodyPreference == BodyPreference.Any
+                            appearancePreference == AppearancePreference.Any
+                            || participant.AppearancePreference == AppearancePreference.Any
+                            || participant.AppearancePreference == appearancePreference
                         ),
                 ];
 
@@ -103,12 +106,12 @@ namespace StreamSideResearch.Managers
                 {
                     if (modConfig.StrictBodyPreference)
                     {
-                        logger.Warning($"No chatters found with preference {bodyPreference} (strict mode enabled)");
+                        logger.Warning($"No chatters with preference {appearancePreference} (strict mode enabled)");
                         return null;
                     }
                     else
                     {
-                        logger.Warning($"No chatters found with preference {bodyPreference} falling back...");
+                        logger.Warning($"No chatters with preference {appearancePreference}, will try all of type...");
                         eligiblePool = [.. participants.Where(participant => participant.NPCType == npcType)];
 
                         if (eligiblePool.Count == 0)
@@ -198,14 +201,14 @@ namespace StreamSideResearch.Managers
                 return;
             }
 
-            var bodyPreference = chatMessage
+            var appearancePreference = chatMessage
                 .Split(" ", StringSplitOptions.RemoveEmptyEntries)
                 .ElementAtOrDefault(1)
                 ?.ToLower() switch
             {
-                "f" or "female" => BodyPreference.Female,
-                "m" or "male" => BodyPreference.Male,
-                _ => BodyPreference.Any,
+                "f" or "female" => AppearancePreference.Female,
+                "m" or "male" => AppearancePreference.Male,
+                _ => AppearancePreference.Any,
             };
 
             lock (chatterLock)
@@ -222,7 +225,7 @@ namespace StreamSideResearch.Managers
                 participants.Add(
                     new Participant
                     {
-                        BodyPreference = bodyPreference,
+                        AppearancePreference = appearancePreference,
                         Color = unityColor,
                         DisplayName = displayName,
                         NPCType = npcType,
@@ -230,7 +233,7 @@ namespace StreamSideResearch.Managers
                 );
 
                 logger.Msg(
-                    $"Chatter {displayName} ({npcType.ToString().ToLower()}, prefers {bodyPreference.ToString().ToLower()}) in queue"
+                    $"Chatter {displayName} ({npcType.ToString().ToLower()}, prefers {appearancePreference.ToString().ToLower()}) in queue"
                 );
             }
         }
