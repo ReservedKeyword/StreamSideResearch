@@ -87,11 +87,11 @@ The command that is used in Twitch chat to express chatter intent to be an in-ga
 
 Assuming that `MessageCustomerCommand` is equal to `!customer` (the default), the following table can be used to better understood how the command is processed by the mod.
 
-| Command                           | Description                                                               |
-| --------------------------------- | ------------------------------------------------------------------------- |
-| `!agent`                          | Chatter will be assigned to any customer, regardless of character models. |
-| `!agent f` **or** `!agent female` | Chatter will be assigned to only female customers.                        |
-| `!agent m` **or** `!agent male`   | Chatter will be assigned to only male customers.                          |
+| Command                                 | Description                                                               |
+| --------------------------------------- | ------------------------------------------------------------------------- |
+| `!agent`                                | Chatter will be assigned to any customer, regardless of character models. |
+| `!customer f` **or** `!customer female` | Chatter will be assigned to only female customers.                        |
+| `!customer m` **or** `!customer male`   | Chatter will be assigned to only male customers.                          |
 
 #### `StrictCharacterAppearance`
 
