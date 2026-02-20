@@ -89,7 +89,7 @@ Assuming that `MessageCustomerCommand` is equal to `!customer` (the default), th
 
 | Command                                 | Description                                                               |
 | --------------------------------------- | ------------------------------------------------------------------------- |
-| `!agent`                                | Chatter will be assigned to any customer, regardless of character models. |
+| `!customer`                                | Chatter will be assigned to any customer, regardless of character models. |
 | `!customer f` **or** `!customer female` | Chatter will be assigned to only female customers.                        |
 | `!customer m` **or** `!customer male`   | Chatter will be assigned to only male customers.                          |
 
