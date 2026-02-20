@@ -13,7 +13,7 @@ namespace StreamSideResearch
         private MelonPreferences_Entry<string> _channelName;
         private MelonPreferences_Entry<string> _messageAgentCommand;
         private MelonPreferences_Entry<string> _messageCustomerCommand;
-        private MelonPreferences_Entry<bool> _strictBodyPreference;
+        private MelonPreferences_Entry<bool> _strictCharacterAppearance;
         private MelonPreferences_Entry<int> _queueSize;
 
         // Backing fields (UI)
@@ -27,7 +27,7 @@ namespace StreamSideResearch
         public string ChannelName => _channelName.Value;
         public string MessageAgentCommand => _messageAgentCommand.Value;
         public string MessageCustomerCommand => _messageCustomerCommand.Value;
-        public bool StrictBodyPreference => _strictBodyPreference.Value;
+        public bool StrictCharacterAppearance => _strictCharacterAppearance.Value;
         public int QueueSize => _queueSize.Value;
 
         // Public accessors (UI)
@@ -79,11 +79,11 @@ namespace StreamSideResearch
                 description: "Chat command to register chatter's intent to be a customer in game"
             );
 
-            _strictBodyPreference = twitchCategory.CreateEntry(
-                identifier: "StrictBodyPreference",
+            _strictCharacterAppearance = twitchCategory.CreateEntry(
+                identifier: "StrictCharacterAppearance",
                 default_value: false,
-                display_name: "Strict Body Preference",
-                description: "If true, an NPC that spawns without chatters in queue with a preference toward their body type will not have a name attached"
+                display_name: "Strict Character Appearance",
+                description: "If true, an NPC that spawns without chatters in queue with a preference toward their appearance type (male/female) will not have a name attached"
             );
 
             _queueSize = twitchCategory.CreateEntry(

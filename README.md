@@ -14,7 +14,7 @@ Its primary focus is on Twitch streamers who wish to add an element of interacti
     * [Channel Name](#channelname)
     * [Message Agent Command](#messageagentcommand)
     * [Message Customer Command](#messagecustomercommand)
-    * [Strict Body Preference](#strictbodypreference)
+    * [Strict Character Appearance](#strictcharacterappearance)
     * [Queue Size](#queuesize)
   * [UI](#ui)
     * [Height Offset](#heightoffset)
@@ -32,19 +32,22 @@ Its primary focus is on Twitch streamers who wish to add an element of interacti
 
 Before installing the mod, install [MelonLoader](#prerequisites), preferably using the official installer found on MelonLoader's website. Once MelonLoader has installed, run the game once, and wait for the main menu to appear before closing the game.
 
+> [!NOTE]
+> When running the game for the first time after installing MelonLoader, it may take a few minutes, as MelonLoader decompiles IL2CPP. Progress will be shown in the console window.
+> 
+> Ensure you wait until MelonLoader completely finishes and loads the main menu before exiting.
+
 Download the latest version of StreamSideResearch from our [Releases page](https://github.com/ReservedKeyword/StreamSideResearch/releases), and drag-and-drop `StreamSideResearch-x.x.x.dll` into the `Mods` directory.
 
-For reference, if you right-click Roadside Research in Steam, click Properties, then click on Installed Files, you should see similar to the following image. In this image, click on "Browse..." and you File Explorer will open to your game's Steam directory.
+For reference, if you right-click Roadside Research in Steam, click Properties, then click on Installed Files, you should see similar to the following image. When clicking on "Browse...", File Explorer will open to your game's Steam directory.
 
 ![Steam Game Location](./images/find-game-location.png)
 
-Start Roadside Research Demo again, allowing the game *and the mod* time to fully launch, before exiting the game (again) once reaching the main menu.
-
-Proceed to the next section in this document to learn how to configure the mod!
+Start Roadside Research again, allowing the game *and the mod* time to fully launch, before exiting the game (again) once reaching the main menu.
 
 ## Configuration
 
-The configuration file can be found in your game's `UserData` directory, with the name `StreamSideResearch.cfg`.
+The configuration file can be found in your game's `UserData` directory, under the name `StreamSideResearch.cfg`.
 
 The path will look similar to `/path/to/game/UserData/StreamSideResearch.cfg`, where `/path/to/game` is the path to the Roadside Research game directory. (See image above on how to locate where the game was downloaded.)
 
@@ -68,57 +71,43 @@ The Twitch channel to join and listen for commands in.
 
 #### `MessageAgentCommand`
 
-The command that is used in Twitch chat to express chatter intent to be an in-game agent. This command, like `MessageCustomerCommand`, can also include an additional preference, such as `f` or `female` for female and `m` or `male` for male.
+The command that is used in Twitch chat to express chatter intent to be an in-game agent. This command, like `MessageCustomerCommand`, can also include an additional character appearance preference, such as `f` or `female` for female and `m` or `male` for male.
 
-Assuming that `MessageAgentCommand` is equal to `!agent`,
+Assuming that `MessageAgentCommand` is equal to `!agent` (the default), the following table can be used to better understood how the command is processed by the mod.
 
-```
-# Will be any agent
-!agent
-
-# Will be an female agent
-!agent f
-!agent female
-
-# Will be an male agent
-!agent m
-!agent male
-```
+| Command                           | Description                                                            |
+| --------------------------------- | ---------------------------------------------------------------------- |
+| `!agent`                          | Chatter will be assigned to any agent, regardless of character models. |
+| `!agent f` **or** `!agent female` | Chatter will be assigned to only female character models.              |
+| `!agent m` **or** `!agent male`   | Chatter will be assigned to only male character models.                |
 
 #### `MessageCustomerCommand`
 
-The command that is used in Twitch chat to express chatter intent to be an in-game customer. This command, like `MessageAgentCommand`, can also include an additional preference, such as `f` or `female` for female and `m` or `male` for male.
+The command that is used in Twitch chat to express chatter intent to be an in-game agent. This command, like `MessageAgentCommand`, can also include an additional character appearance preference, such as `f` or `female` for female and `m` or `male` for male.
 
-Assuming that `MessageCustomerCommand` is equal to `!customer`,
+Assuming that `MessageCustomerCommand` is equal to `!customer` (the default), the following table can be used to better understood how the command is processed by the mod.
 
-```
-# Will be any customer
-!customer
+| Command                           | Description                                                            |
+| --------------------------------- | ---------------------------------------------------------------------- |
+| `!agent`                          | Chatter will be assigned to any agent, regardless of character models. |
+| `!agent f` **or** `!agent female` | Chatter will be assigned to only female character models.              |
+| `!agent m` **or** `!agent male`   | Chatter will be assigned to only male character models.                |
 
-# Will be a female customer
-!customer f
-!customer female
+#### `StrictCharacterAppearance`
 
-# Will be a male customer
-!customer m
-!customer male
-```
+A boolean value (`true`/`false`) that determines how the mod behaves when the queue is limited and an NPC spawns in the game.
 
-#### `StrictBodyPreference`
+If this value is set to `true` and an NPC spawns in the game, the mod will **only** fetch chatters who specified the character appearance preference that is spawning (or chatters who did not specify any body type). If no chatters with the same character appearance preference as the NPC are found, the mod will NOT generate and apply a name tag to the NPC.
 
-A boolean value (`true`/`false`) that will specify how the mod behaves when the queue is exhausted.
+In contrast, if this value is set to `false` and an NPC spawns in the game, the mod will attempt to find a chatter with the same character appearance preference as the NPC. However, unlike if this value is set to `true`, if a chatter with the specified character appearance preference cannot be found, then the mod, instead of failing and not applying a name tag, will fall back to any chatter that has expressed interest in the NPC type, regardless of their character appearance preference.
 
-If this value is set to `true` and an NPC spawns in the game, the mod will **only** fetch chatters who specified the body type preference that is spawning (or chatters who did not specify any body type). If no chatters with the same body type preference as the NPC are found, the mod will NOT generate and apply a name tag to the NPC.
-
-In contrast, if this value is set to `false` and an NPC spawns in the game, the mod will attempt to find a chatter with the same body type preference as the NPC. *However*, unlike if this value is set to `true`, if a chatter with the specified body type preference is not found, then the mod, instead of failing, will fall back to any chatter that has expressed interest in the NPC type, regardless of their body type preference, as specified.
-
-It's important to note that regardless of this value, agents and customers are ALWAYS in split pools. If a chatter expresses interest in being an agent, if no customers can be applied, the mod will never choose an agent. This value only affects body type preference.
+Agents and customers are in separate pools. If an agent spawns in the game and no chatters can be found to apply a name tag, the mod _will not_ attempt to fetch from the pool of chatters who have chosen to be a customer.
 
 #### `QueueSize`
 
-The upper-amount of chatters that are allowed to be in the queue at any given time.
+The upper limit of chatters that are allowed to be in the queue at any given time.
 
-This value is, as mentioned previously, the upper limit. It will fluctuate as agents and customers spawn in the game and chatters are popped from the queue.
+Queue size is expected to fluctuate as agents and customers spawn in the game and chatters are popped from the queue, so this value only defines the absolute maximum value of the queue.
 
 ### UI
 

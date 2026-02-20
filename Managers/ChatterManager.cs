@@ -104,7 +104,7 @@ namespace StreamSideResearch.Managers
 
                 if (eligiblePool.Count == 0)
                 {
-                    if (modConfig.StrictBodyPreference)
+                    if (modConfig.StrictCharacterAppearance)
                     {
                         logger.Warning($"No chatters with preference {appearancePreference} (strict mode enabled)");
                         return null;
